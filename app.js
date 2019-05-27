@@ -1,4 +1,5 @@
-var scores, activeplayer, roundscores, gameplaying, previousDice;
+var scores, activeplayer, roundscores, gameplaying, previousDice, maxnumber;
+
 resetfunc();
 
 function diceshower() {
@@ -7,7 +8,7 @@ function diceshower() {
         document.querySelector('.dice').style.display = 'block';
         document.querySelector('.dice').src = 'dice-' + dice + '.png';
         console.log(previousDice, dice);
-        if (previousDice !== dice) {
+        if (previousDice !== dice || dice !== 6) {
             if (dice !== 1) {
                 roundscores += dice;
                 if (activeplayer === 0) {
@@ -65,7 +66,7 @@ function holdscore() {
             activeplayer = 1;
             document.querySelector('.player-0-panel').classList.remove('active');
             document.querySelector('.player-1-panel').classList.add('active');
-            if (Number(document.querySelector('#score-0').textContent) >= 20) {
+            if (Number(document.querySelector('#score-0').textContent) >= maxnumber) {
                 document.querySelector('#name-0').textContent = "Winner!";
                 document.querySelector('.dice').style.display = 'none';
                 gameplaying = false;
@@ -79,7 +80,7 @@ function holdscore() {
             activeplayer = 0;
             document.querySelector('.player-1-panel').classList.remove('active');
             document.querySelector('.player-0-panel').classList.add('active');
-            if (Number(document.querySelector('#score-1').textContent) >= 20) {
+            if (Number(document.querySelector('#score-1').textContent) >= maxnumber) {
                 document.querySelector('#name-1').textContent = "Winner!";
                 document.querySelector('.dice').style.display = 'none';
                 gameplaying = false;
@@ -110,8 +111,18 @@ function resetfunc() {
 
 }
 
+function onInputChange() {
+    maxnumber = Number(document.getElementById("maxnumber").value);
+    console.log(maxnumber);
+}
+
+function onInutFocus(){
+    document.getElementById("maxnumber").value = ""
+}
+
 document.querySelector('.btn-roll').addEventListener('click', diceshower);
 
 document.querySelector('.btn-hold').addEventListener('click', holdscore);
 
 document.querySelector('.btn-new').addEventListener('click', resetfunc);
+
