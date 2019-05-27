@@ -76,7 +76,7 @@ function holdscore() {
 function resetfunc() {
     scores = [0, 0];
     roundscores = 0;
-    activeplayer = 1;
+    activeplayer = 0;
     gameplaying = true;
     document.querySelector('.dice').style.display = 'none';
     document.querySelector('#current-0').textContent = 0;
