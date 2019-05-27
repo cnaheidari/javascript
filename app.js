@@ -1,4 +1,4 @@
-var scores, activeplayer, roundscores, gameplaying;
+var scores, activeplayer, roundscores, gameplaying, previousDice;
 resetfunc();
 
 function diceshower() {
@@ -6,13 +6,31 @@ function diceshower() {
         var dice = Math.floor((Math.random() * 6) + 1);
         document.querySelector('.dice').style.display = 'block';
         document.querySelector('.dice').src = 'dice-' + dice + '.png';
-
-        if (dice !== 1) {
-            roundscores += dice;
-            if (activeplayer === 0) {
-                document.querySelector('#current-0').textContent = roundscores;
+        console.log(previousDice, dice);
+        if (previousDice !== dice) {
+            if (dice !== 1) {
+                roundscores += dice;
+                if (activeplayer === 0) {
+                    document.querySelector('#current-0').textContent = roundscores;
+                } else {
+                    document.querySelector('#current-1').textContent = roundscores;
+                }
             } else {
-                document.querySelector('#current-1').textContent = roundscores;
+                roundscores = 0;
+                if (activeplayer === 0) {
+                    document.querySelector('#current-0').textContent = roundscores;
+                } else {
+                    document.querySelector('#current-1').textContent = roundscores;
+                }
+                if (activeplayer === 0) {
+                    activeplayer = 1;
+                    document.querySelector('.player-0-panel').classList.remove('active');
+                    document.querySelector('.player-1-panel').classList.add('active');
+                } else {
+                    activeplayer = 0;
+                    document.querySelector('.player-1-panel').classList.remove('active');
+                    document.querySelector('.player-0-panel').classList.add('active');
+                }
             }
         } else {
             roundscores = 0;
@@ -31,6 +49,7 @@ function diceshower() {
                 document.querySelector('.player-0-panel').classList.add('active');
             }
         }
+        previousDice = dice;
     }
 
 }
